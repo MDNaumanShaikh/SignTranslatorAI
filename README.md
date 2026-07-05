@@ -3,7 +3,8 @@
 Visit the platform here
 https://sign-translator-ffnhha6vp-md-nauman-shaikhs-projects.vercel.app/
 
-Real-time ASL sign language recognition powered by MediaPipe, running 100% in the browser.
+SignFlow AI is a real-time, browser-based American Sign Language (ASL) recognition and translation platform powered by Google MediaPipe and a custom-trained neural network. Running 100% client-side to ensure user privacy and sub-millisecond latency, the application tracks hand landmarks at 30 FPS to translate gestures into sentences, read them aloud via voice synthesis, and offer an interactive "AI Sign Coach" for feedback on signing technique. The platform also features a searchable 110+ sign dictionary, a Text-to-Sign translation engine, and secure Firebase integration to persist translation histories
+
 
 ---
 
