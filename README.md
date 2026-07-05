@@ -1,5 +1,8 @@
 # SignFlow AI v2.0 — 110+ Signs | Sentence Builder
 
+Visit the platform here
+https://sign-translator-ffnhha6vp-md-nauman-shaikhs-projects.vercel.app/
+
 Real-time ASL sign language recognition powered by MediaPipe, running 100% in the browser.
 
 ---
