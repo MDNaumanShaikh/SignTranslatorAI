@@ -1,0 +1,8 @@
+# Offline training on ASL Citizen (or similar) MP4 folders — Python 3.10+ recommended
+opencv-python-headless>=4.8.0
+mediapipe>=0.10.11
+numpy>=1.24.0
+tqdm>=4.66.0
+tensorflow>=2.15.0
+scikit-learn>=1.3.0
+tensorflowjs>=4.17.0

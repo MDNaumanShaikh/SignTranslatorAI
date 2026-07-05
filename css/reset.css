@@ -1,0 +1,31 @@
+/* ── reset.css ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:  #07071a;
+  --bg2: #0e0e2a;
+  --glass:  rgba(255,255,255,.035);
+  --glass2: rgba(255,255,255,.07);
+  --border: rgba(255,255,255,.08);
+  --a1: #6c5ce7;
+  --a2: #00cec9;
+  --a3: #fd79a8;
+  --a4: #fdcb6e;
+  --a5: #55efc4;
+  --a6: #74b9ff;
+  --t1: #f0f0f8;
+  --t2: rgba(240,240,248,.55);
+  --t3: rgba(240,240,248,.3);
+  --r:  16px;
+  --rs: 10px;
+  --tr: .3s cubic-bezier(.4,0,.2,1);
+  --ff: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --fm: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+html  { scroll-behavior: smooth; }
+body  { font-family: var(--ff); background: var(--bg); color: var(--t1); min-height: 100vh; overflow-x: hidden; }
+
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(108,92,231,.25); border-radius: 3px; }

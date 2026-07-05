@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignFlow AI — Trained ASL Glosses | Sentence Builder</title>
+
+  <!-- MediaPipe CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1675466862/camera_utils.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1675466124/drawing_utils.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/live.css">
+  <link rel="stylesheet" href="css/t2s.css">
+  <link rel="stylesheet" href="css/dict.css?v=5">
+  <link rel="stylesheet" href="css/history.css">
+  <link rel="stylesheet" href="css/coach.css">
+</head>
+<body>
+
+<div class="bg-fx"></div>
+
+<!-- ── HISTORY SIDEBAR ── -->
+<div class="history-sidebar" id="historySidebar">
+  <div class="history-header">
+    <h3><span style="font-size:1.3rem">🕐</span> Your History</h3>
+    <button class="history-close-btn" onclick="toggleHistory()">✕</button>
+  </div>
+  <div class="history-list" id="sidebarHistoryList">
+    <div style="padding: 1rem; color: var(--t3); font-size: 0.9rem; text-align: center;">Log in to view history</div>
+  </div>
+</div>
+
+<!-- ── NAVIGATION ── -->
+<nav id="navbar">
+  <div class="brand" onclick="nav('home')">
+    <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+      <rect width="28" height="28" rx="8" fill="url(#logoGrad)"/>
+      <path d="M8 18C8 18 10 8 14 8C18 8 15 15 18 13C21 11 20 18 20 18"
+            stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      <defs>
+        <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+          <stop stop-color="#6c5ce7"/>
+          <stop offset="1" stop-color="#00cec9"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="brand-name">SignFlowAI</span>
+  </div>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="nav('home')" class="active" data-p="home">Home</a></li>
+    <li><a href="#" onclick="nav('live')" data-p="live">🎥 Live</a></li>
+    <li><a href="#" onclick="nav('t2s')"  data-p="t2s">✍️ Text→Sign</a></li>
+    <li><a href="#" onclick="nav('dict')" data-p="dict">📖 Dictionary</a></li>
+    <li><a href="#" onclick="nav('coach')" data-p="coach">🤖 AI Coach</a></li>
+    <li><a href="#" onclick="nav('tut')"  data-p="tut">❓ Tutorial</a></li>
+  </ul>
+
+  <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-actions">
+    <button class="btn btn-s btn-sm" onclick="toggleHistory()" style="margin-right:0.5rem">🕐 History</button>
+    <button id="loginBtn" class="btn btn-p btn-sm">Login with Google</button>
+    <div id="userProfile" class="user-profile" style="display:none; cursor:pointer; align-items:center;" title="Click to logout">
+      <img id="profileImg" src="" alt="Profile" style="width:32px; height:32px; border-radius:50%; margin-right:8px; border:2px solid var(--p1);">
+      <span id="userName" style="color:#fff; font-weight:500;"></span>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ══════════════ HOME ══════════════ -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-badge"><span class="dot"></span>Trained gloss vocabulary • Sentence builder • Browser-only</div>
+      <h1>Break Every Barrier<br><span class="gr">With Sign Language AI</span></h1>
+      <p>Real-time hand tracking with MediaPipe, a neural gloss classifier trained on your ASL video data,
+         kinetic typography, voice output, and a sentence builder — all in your browser.</p>
+      <div class="hero-btns">
+        <button class="btn btn-p" onclick="nav('live')">▶ Start Recognition</button>
+        <button class="btn btn-s" onclick="nav('dict')">📖 Browse vocabulary</button>
+        <button class="btn btn-s" onclick="nav('tut')">❓ Tutorial</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n" id="statVocabN">—</div><div class="l">Glosses (trained)</div></div>
+      <div class="stat"><div class="n">21</div><div class="l">Hand Landmarks</div></div>
+      <div class="stat"><div class="n">1</div><div class="l">Neural head</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Client-Side</div></div>
+    </div>
+
+    <div class="features">
+      <div class="feat glass"><div class="ico">🖐️</div><h3>Your ASL gloss set</h3>
+        <p>Labels come from <code style="font-size:.78em">models/labels.json</code> — the same glosses you trained on. Retrain and replace that file with your export.</p></div>
+      <div class="feat glass"><div class="ico">📝</div><h3>Sentence Builder</h3>
+        <p>Recognized signs auto-assemble into sentences. Click to remove words, speak the whole sentence, or clear and start over.</p></div>
+      <div class="feat glass"><div class="ico">✨</div><h3>Kinetic Typography</h3>
+        <p>Each recognized sign bursts onto screen with per-letter wave animations, scale effects, and gradient color shifts.</p></div>
+      <div class="feat glass"><div class="ico">🔊</div><h3>Voice + TTS</h3>
+        <p>Individual words or full sentences spoken aloud via Web Speech API. Toggle on/off anytime.</p></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ LIVE RECOGNITION ══════════════ -->
+  <div class="page" id="page-live">
+    <div class="section-hd">
+      <h2>🎥 Live Recognition</h2>
+      <p>Show signs to build sentences in real time. Hold each pose ~1 second. Up to <strong>two hands</strong> are tracked; the gloss with the best confidence wins. Live loads <code>models/mlp_weights.json</code> or <code>models/tfjs/</code> — same gloss names as the Dictionary.</p>
+    </div>
+
+    <div class="ctrl-bar">
+      <button class="btn btn-p" id="btnStart" onclick="startCam()">▶ Start Camera</button>
+      <button class="btn btn-s" id="btnStop"  onclick="stopCam()" style="display:none">⏹ Stop</button>
+      <button class="btn btn-s" id="btnVoice" onclick="toggleVoice()">🔊 Voice On</button>
+      <button class="btn btn-a btn-sm" onclick="clearSentence()">🗑️ Clear Sentence</button>
+      <button class="btn btn-s btn-sm" onclick="undoWord()">↩ Undo Word</button>
+    </div>
+
+    <div class="live-grid">
+      <div>
+        <!-- Camera Panel -->
+        <div class="cam-wrap glass" id="camPanel">
+          <video id="camVid" autoplay playsinline></video>
+          <canvas id="outCanvas"></canvas>
+          <div class="cam-hud">
+            <div class="cam-pill" id="camPill">
+              <span class="dot-live"></span>
+              <span id="camTxt">Offline</span>
+            </div>
+          </div>
+          <div class="motion-indicator" id="motionIndicator" style="display:none">
+            <span class="motion-type" id="motionType">STATIC</span>
+            <span id="motionIntensity">0%</span>
+          </div>
+          <div class="conf-track"><div class="conf-fill" id="confFill"></div></div>
+          <div class="motion-track"><div class="motion-fill" id="motionFill"></div></div>
+        </div>
+
+        <!-- Sentence Builder -->
+        <div class="sentence-box glass" style="margin-top:1rem">
+          <h4>📝 Sentence Builder</h4>
+          <div class="sentence-words" id="sentWords">
+            <span style="color:var(--t3);font-size:.82rem">Signs will appear here as a sentence…</span>
+          </div>
+          <div class="sentence-actions">
+            <button class="btn btn-p btn-sm" onclick="speakSentence()">🔊 Speak Sentence</button>
+            <button class="btn btn-s btn-sm" onclick="copySentence()">📋 Copy</button>
+            <button class="btn btn-s btn-sm" onclick="saveCurrentSentence()">💾 Save</button>
+            <button class="btn btn-d btn-sm" onclick="clearSentence()">🗑️ Clear</button>
+          </div>
+          <div class="sentence-output" id="sentOutput"></div>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="rec-panel">
+        <div class="cur-sign glass">
+          <div class="lbl">Currently Recognized</div>
+          <div class="kin-wrap" id="kinDisplay">
+            <span style="color:var(--t3);font-size:.95rem">Waiting for hand…</span>
+          </div>
+          <div class="hand-info" id="handInfo">Show a sign to begin</div>
+        </div>
+
+        <div class="hist-panel glass">
+          <h4>🕐 History</h4>
+          <div class="hist-list" id="histList">
+            <div class="hist-item" style="color:var(--t3)">No signs yet</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TEXT → SIGN ══════════════ -->
+  <div class="page" id="page-t2s">
+    <div class="section-hd">
+      <h2>✍️ Text → Sign Translation</h2>
+      <p>Type words or sentences. Matching signs display with animated kinetic typography.</p>
+    </div>
+    <div class="t2s-grid">
+      <div class="t2s-input glass">
+        <h3>Enter Text</h3>
+        <textarea id="t2sIn"
+          placeholder="Type: Hello how are you today? I am happy thank you..."
+          oninput="handleT2S()"></textarea>
+        <div style="display:flex; gap:0.5rem; margin-top:.8rem;">
+          <button class="btn btn-p" onclick="speakT2S()">🔊 Speak</button>
+          <button class="btn btn-s" onclick="saveT2S()">💾 Save</button>
+        </div>
+        <div class="sign-cards" id="signCards"></div>
+      </div>
+      <div class="t2s-output glass">
+        <h3>Kinetic Output</h3>
+        <div class="t2s-words" id="t2sWords">
+          <span style="color:var(--t3);font-size:.9rem">Your animated text appears here…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ DICTIONARY ══════════════ -->
+  <div class="page" id="page-dict">
+    <div class="section-hd">
+      <h2>📖 Trained gloss dictionary</h2>
+      <p>Each card shows the <strong>gloss name</strong> and, when available, a <strong>reference still</strong> from your dataset video. Practice here, then use Live — predictions use the same labels.</p>
+    </div>
+    <div class="dict-banner glass" id="dictBanner" role="status">
+      <span class="dict-banner-ico">🎯</span>
+      <div class="dict-banner-body">
+        <strong id="dictBannerTitle">Preparing dictionary…</strong>
+        <p id="dictBannerHint" class="dict-banner-sub">Labels load from <code>models/labels.json</code>. After retraining, replace that file so this list stays in sync.</p>
+      </div>
+    </div>
+    <div class="dict-search">
+      <input type="text" id="dictSearch" placeholder="Search glosses (e.g. LIBRARY, GO THROUGH)…" oninput="filterDict()">
+      <select id="dictCat" onchange="filterDict()">
+        <option value="all">All Categories</option>
+      </select>
+    </div>
+    <div class="dict-grid" id="dictGrid"></div>
+  </div>
+
+  <!-- ══════════════ AI COACH ══════════════ -->
+  <div class="page" id="page-coach">
+    <div class="section-hd">
+      <h2>🤖 AI Sign Coach</h2>
+      <p>Practice ASL signs with real-time AI guidance. Get step-by-step instructions and instant feedback on your signing.</p>
+    </div>
+    
+    <div class="coach-grid">
+      <!-- Chat Area -->
+      <div class="coach-chat">
+        <div class="chat-container glass">
+          <div class="chat-header">
+            <div class="coach-avatar">🤖</div>
+            <div class="coach-info">
+              <h3>Sign Coach AI</h3>
+              <span class="coach-status">Ready to help you learn signs</span>
+            </div>
+          </div>
+          
+          <div class="chat-messages" id="chatMessages">
+            <div class="message coach-msg">
+              <div class="msg-avatar">🤖</div>
+              <div class="msg-content">
+                <p>Hi! I'm your AI Sign Coach. I can help you learn ASL signs step by step!</p>
+                <p>Try asking me to teach you signs like:</p>
+                <ul class="example-requests">
+                  <li>"Teach me how to sign HELLO"</li>
+                  <li>"Show me THANK YOU"</li>
+                  <li>"Practice daily conversation signs"</li>
+                  <li>"Help me with PLEASE and SORRY"</li>
+                </ul>
+                <p>What would you like to learn today?</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="chat-input-area">
+            <div class="input-row">
+              <input type="text" id="coachInput" placeholder="Ask me to teach you a sign..." onkeypress="handleCoachInputKeypress(event)">
+              <button class="btn btn-p" onclick="sendCoachMessage()">Send</button>
+            </div>
+            <div class="quick-actions">
+              <button class="quick-btn" onclick="quickRequest('daily')">📅 Daily Signs</button>
+              <button class="quick-btn" onclick="quickRequest('greetings')">👋 Greetings</button>
+              <button class="quick-btn" onclick="quickRequest('manners')">🙏 Manners</button>
+              <button class="quick-btn" onclick="quickRequest('help')">❓ Help</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Practice Area -->
+      <div class="coach-practice">
+        <div class="practice-container glass">
+          <div class="practice-header">
+            <h3>Practice Area</h3>
+            <div class="practice-controls">
+              <button class="btn btn-p btn-sm" id="btnStartPractice" onclick="startPracticeCam()">▶ Start Camera</button>
+              <button class="btn btn-s btn-sm" id="btnStopPractice" onclick="stopPracticeCam()" style="display:none">⏹ Stop</button>
+            </div>
+          </div>
+          
+          <div class="practice-cam" id="practiceCam">
+            <video id="practiceVid" autoplay playsinline style="display:none;"></video>
+            <canvas id="practiceCanvas" style="display:none;"></canvas>
+            <div class="practice-placeholder" id="practicePlaceholder">
+              <div class="placeholder-icon">📸</div>
+              <p>Start camera to practice signs with real-time feedback</p>
+            </div>
+          </div>
+          
+          <div class="practice-feedback" id="practiceFeedback">
+            <div class="feedback-item">
+              <span class="feedback-label">Current Sign:</span>
+              <span class="feedback-value" id="currentPracticeSign">None</span>
+            </div>
+            <div class="feedback-item">
+              <span class="feedback-label">Recognition:</span>
+              <span class="feedback-value" id="recognitionStatus">Waiting...</span>
+            </div>
+            <div class="feedback-item">
+              <span class="feedback-label">Confidence:</span>
+              <div class="confidence-bar">
+                <div class="confidence-fill" id="practiceConfidence" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="practice-instructions" id="practiceInstructions">
+            <h4>📝 Instructions</h4>
+            <div class="instruction-content">
+              <div class="instruction-text" id="instructionText">
+                <p>Select a sign from chat to begin practicing...</p>
+              </div>
+              <div class="instruction-video" id="instructionVideo" style="display:none;">
+                <h5>🎥 Video Tutorial</h5>
+                <video id="tutorialVideo" controls playsinline style="width:100%; max-width:300px; border-radius:8px;">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TUTORIAL ══════════════ -->
+  <div class="page" id="page-tut">
+    <div class="section-hd">
+      <h2>❓ How It Works</h2>
+      <p>Quick guide to using SignFlow AI for recognition, translation, and sentence building.</p>
+    </div>
+    <div class="tut-steps">
+      <div class="tut-card glass" onclick="nav('live')" style="cursor: pointer;"><span class="step-n">1</span><span class="demo">📸</span>
+        <h3>Start Camera</h3><p>Go to Live Recognition and click Start Camera. Grant browser permission. Ensure good lighting.</p>
+        <span class="tip">💡 Chrome / Edge recommended</span></div>
+      <div class="tut-card glass" onclick="nav('live')" style="cursor: pointer;"><span class="step-n">2</span><span class="demo">🖐️</span>
+        <h3>Show a Sign</h3><p>Hold one or both hands in frame (up to two). MediaPipe tracks 21 landmarks per hand; the model scores each hand and uses the stronger match.</p>
+        <span class="tip">💡 Hold steady ~1 second</span></div>
+      <div class="tut-card glass" onclick="nav('live')" style="cursor: pointer;"><span class="step-n">3</span><span class="demo">📝</span>
+        <h3>Build Sentences</h3><p>Each recognized sign adds to the Sentence Builder. Signs appear as colored word chips. Click a chip to remove it.</p>
+        <span class="tip">💡 Click 🔊 to hear the full sentence</span></div>
+      <div class="tut-card glass" onclick="nav('live')" style="cursor: pointer;"><span class="step-n">4</span><span class="demo">✨</span>
+        <h3>Kinetic Typography</h3><p>Words explode with per-letter animations. Each sign gets unique gradients and motion effects.</p>
+        <span class="tip">💡 Hover letters for interactive effects</span></div>
+      <div class="tut-card glass" onclick="nav('t2s')" style="cursor: pointer;"><span class="step-n">5</span><span class="demo">🔄</span>
+        <h3>Text → Sign</h3><p>Type any sentence in Text→Sign. Matching signs show as animated cards with emoji visuals.</p>
+        <span class="tip">💡 Matches gloss names from your vocabulary file</span></div>
+      <div class="tut-card glass" onclick="nav('dict')" style="cursor: pointer;"><span class="step-n">6</span><span class="demo">📖</span>
+        <h3>Dictionary</h3><p>Browse and search all trained glosses. Cards show each label from your dataset.</p>
+        <span class="tip">💡 Great for learning new signs</span></div>
+      <div class="tut-card glass" onclick="nav('coach')" style="cursor: pointer;"><span class="step-n">7</span><span class="demo">🤖</span>
+        <h3>AI Coach</h3><p>Interactive chatbot teaches signs with video tutorials and real-time practice feedback.</p>
+        <span class="tip">💡 Ask "Teach me THANK YOU" to start</span></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Toast container -->
+<div class="toast-c" id="toastC"></div>
+
+<!-- JavaScript (order matters) -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+<script src="js/ml_classifier.js?v=8"></script>
+<script src="js/vocabulary.js?v=5"></script>
+<script src="js/speech.js?v=5"></script>
+<script src="js/ui.js?v=5"></script>
+<script src="js/sentence.js?v=5"></script>
+<script src="js/camera.js?v=8"></script>
+<script src="js/t2s.js?v=5"></script>
+<script src="js/dict.js?v=5"></script>
+<script src="js/coach.js?v=1"></script>
+<script src="js/app.js?v=5"></script>
+
+<script>
+  // Detect if running on localhost
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  
+  function toggleHistory() {
+    document.getElementById('historySidebar').classList.toggle('open');
+    document.body.classList.toggle('sidebar-open');
+  }
+  function saveCurrentSentence() {
+    const text = typeof sentence !== 'undefined' ? sentence.join(' ') : '';
+    if (window.saveSentenceToHistory) window.saveSentenceToHistory(text, 'live');
+  }
+  
+  // Disable send elements and console features on localhost
+  document.addEventListener('DOMContentLoaded', function() {
+    if (isLocalhost) {
+      // Hide send buttons and console elements
+      const sendButtons = document.querySelectorAll('[id*="send"], [class*="send"], button:contains("Send")');
+      const consoleElements = document.querySelectorAll('[id*="console"], [class*="console"]');
+      
+      sendButtons.forEach(btn => {
+        btn.style.display = 'none';
+        btn.disabled = true;
+      });
+      
+      consoleElements.forEach(elem => {
+        elem.style.display = 'none';
+      });
+      
+      // Add localhost indicator
+      const indicator = document.createElement('div');
+      indicator.style.cssText = 'position:fixed; top:10px; right:10px; background:rgba(255,0,0,0.8); color:white; padding:5px 10px; border-radius:5px; font-size:12px; z-index:9999;';
+      indicator.textContent = '🔒 Localhost Mode - Console Disabled';
+      document.body.appendChild(indicator);
+      
+      setTimeout(() => {
+        indicator.style.display = 'none';
+      }, 3000);
+    }
+  });
+  function saveT2S() {
+    const text = document.getElementById('t2sIn').value.trim();
+    if (window.saveSentenceToHistory) window.saveSentenceToHistory(text, 't2s');
+  }
+</script>
+<script type="module" src="js/firebase-config.js"></script>
+<script type="module" src="js/auth.js"></script>
+<script type="module" src="js/history.js"></script>
+
+</body>
+</html>

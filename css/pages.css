@@ -1,0 +1,46 @@
+/* ── pages.css ── */
+
+main  { position:relative; z-index:1; padding-top:60px; min-height:100vh; }
+.page { display:none; padding:1.5rem; max-width:1400px; margin:0 auto; animation:fadeUp .5s ease; }
+.page.active { display:block; }
+
+.section-hd        { margin-bottom:1.2rem; }
+.section-hd h2     { font-size:1.6rem; font-weight:800; margin-bottom:.3rem; }
+.section-hd p      { color:var(--t2); font-size:.9rem; }
+
+/* ── Hero ── */
+.hero          { text-align:center; padding:4rem 1rem 2.5rem; }
+.hero-badge    { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:50px; background:rgba(108,92,231,.12); border:1px solid rgba(108,92,231,.25); color:var(--a1); font-size:.78rem; font-weight:600; margin-bottom:1.2rem; }
+.hero-badge .dot { width:7px; height:7px; border-radius:50%; background:var(--a5); animation:pulse 2s ease infinite; }
+.hero h1       { font-size:clamp(2rem,5.5vw,3.8rem); font-weight:800; line-height:1.1; margin-bottom:1rem; }
+.hero h1 .gr   { background:linear-gradient(135deg,var(--a1),var(--a2),var(--a3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-size:200% 200%; animation:grShift 4s ease infinite; }
+.hero p        { font-size:1.05rem; color:var(--t2); max-width:620px; margin:0 auto 2rem; line-height:1.7; }
+.hero-btns     { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+/* ── Features ── */
+.features { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.2rem; margin-top:2.5rem; }
+.feat      { padding:1.5rem; text-align:left; }
+.feat .ico { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:1rem; }
+.feat:nth-child(1) .ico { background:rgba(108,92,231,.15); }
+.feat:nth-child(2) .ico { background:rgba(0,206,201,.15); }
+.feat:nth-child(3) .ico { background:rgba(253,121,168,.15); }
+.feat:nth-child(4) .ico { background:rgba(253,203,110,.15); }
+.feat h3 { font-size:1.05rem; margin-bottom:.4rem; }
+.feat p  { color:var(--t2); font-size:.88rem; line-height:1.6; }
+
+/* ── Stats ── */
+.stats   { display:flex; justify-content:center; gap:2.5rem; margin-top:2.5rem; flex-wrap:wrap; }
+.stat    { text-align:center; }
+.stat .n { font-size:1.8rem; font-weight:800; background:linear-gradient(135deg,var(--a2),var(--a5)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.stat .l { font-size:.78rem; color:var(--t3); margin-top:2px; }
+
+/* ── Tutorial ── */
+.tut-steps    { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem; margin-top:1.5rem; }
+.tut-card     { padding:1.5rem; position:relative; overflow:hidden; }
+.tut-card .step-n { position:absolute; top:-8px; right:8px; font-size:4rem; font-weight:900; color:rgba(108,92,231,.06); line-height:1; }
+.tut-card .demo   { font-size:2.5rem; margin-bottom:.8rem; display:block; }
+.tut-card h3      { font-size:1rem; font-weight:700; margin-bottom:.4rem; }
+.tut-card p       { color:var(--t2); font-size:.85rem; line-height:1.6; }
+.tut-card .tip    { display:inline-block; margin-top:.6rem; padding:4px 12px; background:rgba(108,92,231,.08); border-radius:50px; font-size:.72rem; color:var(--a1); font-weight:600; }
+
+@media (max-width:700px) { .page { padding:1rem; } .hero h1 { font-size:1.8rem; } }

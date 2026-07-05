@@ -1,0 +1,147 @@
+/* ── dict.css ── */
+
+.dict-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: var(--r);
+  margin-bottom: 1.1rem;
+  border: 1px solid var(--border);
+}
+.dict-banner-ico { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+.dict-banner-body { min-width: 0; }
+.dict-banner-body strong { display: block; font-size: 0.95rem; color: var(--t1); margin-bottom: 4px; }
+.dict-banner-sub {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--t3);
+  line-height: 1.45;
+}
+.dict-banner-sub code {
+  font-size: 0.74em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--a2);
+}
+.dict-banner-err {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  color: #ff8a8a;
+  line-height: 1.35;
+}
+
+.dict-search { display:flex; gap:8px; margin-bottom:1rem; }
+.dict-search input {
+  flex:1; padding:10px 16px; border-radius:50px;
+  border:1px solid var(--border); background:rgba(0,0,0,.3);
+  color:var(--t1); font-size:.9rem; outline:none; transition:var(--tr);
+}
+.dict-search input:focus { border-color:var(--a1); box-shadow:0 0 0 3px rgba(108,92,231,.12); }
+.dict-search select {
+  padding:8px 14px; border-radius:50px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--t1); font-size:.85rem; cursor:pointer;
+}
+
+.dict-grid  { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+.d-card     { display:flex; align-items:flex-start; gap:12px; padding:12px; border-radius:var(--rs); background:var(--glass); border:1px solid var(--border); transition:var(--tr); cursor:default; }
+.d-card:hover { background:var(--glass2); transform:translateY(-2px); }
+
+.d-card--with-thumb { align-items: stretch; }
+
+.d-thumb-wrap {
+  flex: 0 0 132px;
+  width: 132px;
+  height: 99px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.d-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.d-thumb-fallback {
+  background: linear-gradient(145deg, rgba(108, 92, 231, 0.2), rgba(0, 206, 201, 0.12));
+}
+.d-thumb-fallback-ico {
+  font-size: 2rem;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.d-card .d-info { flex: 1; min-width: 0; }
+.d-card .d-gloss-name { font-size: 0.95rem; font-weight: 700; margin: 0 0 6px; word-break: break-word; color: var(--t1); }
+.d-card .d-gloss-desc { font-size: 0.74rem; color: var(--t3); line-height: 1.45; margin: 0 0 8px; }
+.d-card .d-cat  { font-size:.65rem; padding:2px 8px; border-radius:20px; background:rgba(108,92,231,.12); color:var(--a1); font-weight:600; display:inline-block; }
+.d-card .d-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.d-card .d-actions button {
+  font-size: 0.72rem;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--t1);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--tr);
+}
+.d-card .d-actions button:hover {
+  background: rgba(108, 92, 231, 0.2);
+  border-color: rgba(108, 92, 231, 0.35);
+}
+.d-card .d-actions button.d-btn-primary {
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.35), rgba(0, 206, 201, 0.2));
+  border-color: rgba(108, 92, 231, 0.4);
+}
+.d-card .d-actions button.d-btn-play {
+  background: linear-gradient(135deg, rgba(0, 206, 201, 0.3), rgba(108, 92, 231, 0.2));
+  border-color: rgba(0, 206, 201, 0.4);
+  color: #00cec9;
+}
+.video-modal-content {
+  background: var(--bg1);
+  padding: 24px;
+  border-radius: 16px;
+  max-width: 90vw;
+  max-height: 90vh;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.video-modal-content h3 {
+  margin: 0 0 16px;
+  color: var(--t1);
+}
+.video-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--t1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--tr);
+}
+.video-modal-close:hover {
+  background: rgba(255, 100, 100, 0.2);
+}

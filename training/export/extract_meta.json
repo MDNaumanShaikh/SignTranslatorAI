@@ -1,0 +1,9 @@
+{
+  "videos_root": "D:\\OFFICIAL (D)\\Downloads\\ASL_Citizen\\ASL_Citizen\\videos",
+  "n_samples": 4720,
+  "feature_dim": 63,
+  "skipped_reasons": {
+    "insufficient_hands": 280
+  },
+  "merge_gloss_variants": true
+}

@@ -1,0 +1,37 @@
+/* ── t2s.css ── */
+
+.t2s-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-top:1rem; }
+
+.t2s-input    { padding:1.5rem; }
+.t2s-input h3 { font-size:1rem; font-weight:700; margin-bottom:.8rem; }
+.t2s-input textarea {
+  width:100%; min-height:100px; padding:.8rem;
+  background:rgba(255,255,255,.03); border:1px solid var(--border);
+  border-radius:var(--rs); color:var(--t1); font-family:var(--ff);
+  font-size:.95rem; resize:vertical; transition:var(--tr); outline:none;
+}
+.t2s-input textarea:focus { border-color:var(--a1); box-shadow:0 0 0 3px rgba(108,92,231,.12); }
+
+.sign-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:8px; margin-top:1rem; }
+.s-card     { text-align:center; padding:1rem .5rem; border-radius:var(--rs); background:rgba(255,255,255,.025); border:1px solid var(--border); animation:cardPop .4s cubic-bezier(.34,1.56,.64,1) both; cursor:default; transition:var(--tr); }
+.s-card:hover { transform:translateY(-3px)scale(1.04); background:var(--glass2); }
+.s-card .em   { font-size:2.2rem; display:block; margin-bottom:.3rem; animation:bounce 2s ease infinite; }
+.s-card .nm   { font-size:.72rem; font-weight:600; color:var(--t2); }
+
+.t2s-output    { padding:1.5rem; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:300px; }
+.t2s-output h3 { font-size:.72rem; color:var(--t3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:1.2rem; }
+.t2s-words     { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.t2s-w {
+  font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:700;
+  padding:5px 12px; border-radius:var(--rs);
+  animation:wFloat .5s cubic-bezier(.34,1.56,.64,1) both;
+  cursor:default; transition:transform .15s;
+}
+.t2s-w:hover { transform:scale(1.15) rotate(-3deg); }
+.t2s-w:nth-child(5n+1) { color:var(--a1); background:rgba(108,92,231,.08); }
+.t2s-w:nth-child(5n+2) { color:var(--a2); background:rgba(0,206,201,.08); }
+.t2s-w:nth-child(5n+3) { color:var(--a3); background:rgba(253,121,168,.08); }
+.t2s-w:nth-child(5n+4) { color:var(--a4); background:rgba(253,203,110,.08); }
+.t2s-w:nth-child(5n+5) { color:var(--a5); background:rgba(85,239,196,.08); }
+
+@media (max-width:900px) { .t2s-grid { grid-template-columns:1fr; } }
